@@ -1,0 +1,83 @@
+Pioneer Emery Stones — easy hosting install
+==========================================
+
+You need: PHP 7.4+, MySQL, Apache (cPanel / Hostinger / GoDaddy etc.)
+
+STEP 1 — Upload
+---------------
+1. Unzip pioneer-emery-stones-deploy.zip on your computer.
+2. Upload the pioneer-emery-stones folder to public_html
+   (File Manager or FTP).
+
+   Option A (easiest): upload the INNER folder so you get:
+   public_html/pioneer-emery-stones/install.php
+
+   Option B (own domain): upload ALL files INSIDE the folder
+   into public_html so you get:
+   public_html/install.php
+   public_html/public/
+   public_html/config/
+
+STEP 2 — Create database
+------------------------
+In cPanel → MySQL Databases:
+- Create a database (example: pioneer_emery)
+- Create a user and password
+- Add the user to the database with ALL PRIVILEGES
+Copy the full names (hosting often adds a prefix, like user_pioneer).
+
+STEP 3 — Run installer
+----------------------
+Open in browser:
+  https://yourdomain.com/pioneer-emery-stones/install.php
+  (or https://yourdomain.com/install.php if files are in public_html)
+
+Fill:
+- MySQL host (usually localhost)
+- Database name (cPanel name, e.g. pioneere_stone)
+- Username (cPanel name, e.g. pioneere_stone — not root)
+- Password
+- Website URL: https://yourdomain.com/public
+  (must include /public unless document root is the public folder)
+
+If you see "Access denied for user root": the zip still had local XAMPP settings.
+Open install.php and enter the cPanel database user, then click Install.
+
+Click Install website.
+
+STEP 4 — Open the site
+----------------------
+Website:  https://yourdomain.com/pioneer-emery-stones/public/en
+Admin:    https://yourdomain.com/pioneer-emery-stones/public/admin/login
+
+Default admin:
+  Username: admin
+  Password: password
+CHANGE THIS immediately.
+
+STEP 5 — Security
+-----------------
+Delete install.php from the server after install.
+
+If pretty URLs fail, in cPanel enable Apache "mod_rewrite"
+and AllowOverride All (usually already on).
+
+PHP version
+-----------
+The site works on PHP 7.4 (common on cPanel).
+If you can, in cPanel → Select PHP Version, choose PHP 8.1 or 8.2.
+
+PHP MySQL: the installer and site use mysqli if PDO is not available.
+In cPanel → Select PHP Version → Extensions, enable at least:
+  mysqli
+and if possible also pdo + pdo_mysql, plus mbstring.
+Then Save and reload.
+
+If you still see HTTP ERROR 500:
+- Re-upload the NEW zip
+- Run install.php again
+- In cPanel error_log, check the latest PHP error
+
+In cPanel → Domains → Document Root, set it to:
+  public_html/pioneer-emery-stones/public
+Then the site opens at https://yourdomain.com/en

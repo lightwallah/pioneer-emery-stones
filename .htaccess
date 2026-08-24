@@ -1,0 +1,17 @@
+# Shared hosting: send all requests into /public
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(install\.php)$ - [L]
+    RewriteRule ^$ public/ [L]
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Block direct access to app, config, database
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(sql|md|sh|json|lock)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
